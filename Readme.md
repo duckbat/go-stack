@@ -1,7 +1,3 @@
-Here’s an updated `README.md` with a link to the Swagger documentation:
-
----
-
 # Todo REST API in Go
 
 This is a simple Todo REST API built using Go with [Fiber](https://gofiber.io/), MongoDB, and [godotenv](https://github.com/joho/godotenv) for environment variable management.
