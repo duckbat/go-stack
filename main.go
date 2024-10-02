@@ -128,7 +128,7 @@ func updateTodos(c *fiber.Ctx) error {
 	if err != nil {
 		return err
 	}
-	return c.Status(200).JSON(fiber.Map{"success": true})
+	return c.Status(200).JSON(fiber.Map{"update success": true})
 
 }
 
@@ -150,7 +150,7 @@ func deleteTodos(c *fiber.Ctx) error {
 		return err
 	}
 
-	return c.Status(200).JSON(fiber.Map{"success": true})
+	return c.Status(200).JSON(fiber.Map{"delete success": true})
 }
 
 

@@ -1,0 +1,132 @@
+openapi: 3.0.0
+info:
+  title: Todo REST API
+  description: A simple Todo REST API built with Go, Fiber, and MongoDB.
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+servers:
+  - url: http://localhost:5000
+    description: Local development server
+tags:
+  - name: Todos
+    description: API for managing todos
+
+paths:
+  /api/todos:
+    get:
+      tags:
+        - Todos
+      summary: Get all todos
+      description: Retrieve a list of all todos in the database.
+      responses:
+        '200':
+          description: A JSON array of todos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+        '500':
+          description: Server error
+
+    post:
+      tags:
+        - Todos
+      summary: Create a new todo
+      description: Create a new todo item.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoInput'
+      responses:
+        '201':
+          description: Todo successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '400':
+          description: Invalid request (e.g., empty todo body)
+        '500':
+          description: Server error
+
+  /api/todos/{id}:
+    patch:
+      tags:
+        - Todos
+      summary: Update a todo's completion status
+      description: Mark a todo as completed.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the todo to update
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Todo successfully updated
+        '400':
+          description: Invalid ID or request
+        '500':
+          description: Server error
+
+    delete:
+      tags:
+        - Todos
+      summary: Delete a todo
+      description: Delete a todo by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the todo to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Todo successfully deleted
+        '400':
+          description: Invalid ID
+        '500':
+          description: Server error
+
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the todo
+          example: "63419d9a0f9e7f9a9f7e1234"
+        completed:
+          type: boolean
+          description: Indicates if the todo is completed
+          example: false
+        body:
+          type: string
+          description: The content of the todo
+          example: "Write Swagger documentation"
+      required:
+        - completed
+        - body
+
+    TodoInput:
+      type: object
+      properties:
+        completed:
+          type: boolean
+          description: Indicates if the todo is completed
+          example: false
+        body:
+          type: string
+          description: The content of the todo
+          example: "Write Swagger documentation"
+      required:
+        - body
